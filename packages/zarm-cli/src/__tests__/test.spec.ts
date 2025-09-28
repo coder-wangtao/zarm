@@ -1,5 +1,5 @@
-import { mocked } from 'ts-jest/utils';
 import execa from 'execa';
+import { mocked } from 'ts-jest/utils';
 import testExecutor from '../test';
 
 jest.mock('execa');

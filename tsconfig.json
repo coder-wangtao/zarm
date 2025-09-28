@@ -1,14 +1,27 @@
 {
   "compilerOptions": {
-    "baseUrl": "./packages",
-    "target": "ES2019",
+    "baseUrl": "./packages", //如果你在 monorepo 或多包结构中，每个包都在 packages/ 下，这样可以方便使用绝对路径导入。
+    "target": "ES2019", //ES2019 + ESNext 模块意味着你希望编译后的 JS 支持较新特性，但仍使用 ES 模块。
     "module": "ESNext",
-    "moduleResolution": "Node",
-    "jsx": "preserve",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "lib": ["ESNext", "DOM"]
+    "moduleResolution": "Node", // // 模块解析策略，Node 风格
+    "jsx": "preserve", // Babel 或 Vite 配合使用，TypeScript 不会转换 JSX，由其他工具处理。
+    "esModuleInterop": true, //允许 import fs from "fs" 这种写法，即使 fs 是 CommonJS 模块。
+    "skipLibCheck": true, //跳过类型声明文件的检查，减少编译时间。在依赖类型不可靠时很有用，但可能掩盖一些类型错误。
+    "resolveJsonModule": true, // 支持 import json 文件
+    "lib": ["ESNext", "DOM"] //ESNext + DOM，说明你既用现代 JS 特性，也可能在浏览器环境运行。
   },
-  "exclude": ["**/__tests__/**", "tests"]
+  "exclude": ["**/__tests__/**", "tests"] // 排除测试目录
 }
+
+// "moduleResolution": "Node",
+// TypeScript 编译器将遵循上述 Node.js 模块解析规则来解析模块。
+// 这对于那些旨在与 Node.js 生态系统集成的项目特别有用，因为它确保了 TypeScript 和 Node.js 解析模块的方式一致，从而减少了潜在的不兼容性问题。
+
+// "jsx": "preserve",	有三种模式
+// 	preserve:生成代码中会保留JSX以供后续的转换操作使用(比如：Babel).另外,输出文件会带有.jsx扩展名。
+// 	react:会生成React.createElement,在使用前不需要再进行转换操作了,输出文件的扩展名为.js。
+// 	react-native:相当于preserve,它也保留了所有的JSX,但是输出文件的扩展名是.js
+// 	模式 			输入 		输出 						输出文件扩展名
+// 	preserve 		<div /> 	<div /> 					.jsx
+// 	react 			<div /> 	React.createElement("div") 	.js
+// 	react-native 	<div /> 	<div /> 					.js

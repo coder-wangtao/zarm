@@ -1,11 +1,16 @@
 # editorconfig.org
-
+# root = true 声明这是 根配置，编辑器不会再向上查找 .editorconfig 文件。
 root = true
-
+# 匹配 所有文件（* 表示全局适用）。
 [*]
+# 指定文件编码为 UTF-8，保证跨平台不会出现乱码。
 charset = utf-8
+# 换行符统一为 LF（\n），适合 Linux/macOS 或跨平台项目。避免 Windows 默认的 CRLF (\r\n) 带来的格式问题。
 end_of_line = lf
+# 使用 空格缩进，每层缩进 2 个空格。常用于 JavaScript/TypeScript、前端项目。
 indent_style = space
 indent_size = 2
+# 保存文件时自动去掉行尾多余空格，保持代码整洁。
 trim_trailing_whitespace = true
+# 文件末尾必须有一个空行，有助于避免 Git diff 中的无意义修改，也符合 POSIX 标准。
 insert_final_newline = true

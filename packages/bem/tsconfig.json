@@ -1,8 +1,11 @@
 {
   "extends": "../../tsconfig",
   "compilerOptions": {
+    // 启用 声明文件 生成。声明文件是 TypeScript 用来描述类型的文件，通常以 .d.ts 为扩展名。当启用该选项时，编译器会为每个 .ts 文件生成一个对应的 .d.ts 文件。
     "declaration": true,
+    // 只生成声明文件，而 不编译 .ts 文件成 JavaScript。这样，只会生成 .d.ts 文件，而不会生成实际的 JavaScript 输出。这对于库开发者很有用，可以单独生成类型声明文件。
     "emitDeclarationOnly": true
   },
+  // 也就是说，src 目录中的所有 TypeScript 文件（例如 .ts 或 .tsx 文件）都会被 TypeScript 编译器处理并生成对应的声明文件。
   "include": ["src"]
 }

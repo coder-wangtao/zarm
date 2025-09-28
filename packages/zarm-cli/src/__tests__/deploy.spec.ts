@@ -1,6 +1,5 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import { mocked } from 'ts-jest/utils';
-
 import { getProjectConfig } from '../deploy';
 import { getCustomConfig } from '../utils';
 

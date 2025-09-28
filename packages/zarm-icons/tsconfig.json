@@ -1,9 +1,10 @@
 {
+  // 表示继承上层目录中的 tsconfig.json 配置。
   "extends": "../../tsconfig",
   "compilerOptions": {
-    "jsx": "react",
-    "declaration": true,
-    "emitDeclarationOnly": true
+    "jsx": "react", // 编译 JSX 时，生成 React.createElement 形式的代码。
+    "declaration": true, // 生成 .d.ts 声明文件。，编译器会为每个 .ts 文件生成一个对应的 .d.ts 文件。
+    "emitDeclarationOnly": true // 只生成 .d.ts 文件，不输出编译后的 .js 文件。 常见于 组件库 / SDK 的构建场景：源码由 Babel、esbuild、Vite 等工具编译，TypeScript 只负责输出类型声明。
   },
-  "include": ["src"]
+  "include": ["src"] // 只编译 src 目录下的代码。
 }
