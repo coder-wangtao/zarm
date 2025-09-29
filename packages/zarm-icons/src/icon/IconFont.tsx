@@ -1,6 +1,7 @@
-import React, { ReactNode, FunctionComponent } from 'react';
+import React, { FunctionComponent, ReactNode } from 'react';
 import Icon, { IconProps } from './index';
-
+// 这段代码是一个用于创建自定义图标组件的函数 createFromIconfont，它接受一个 scriptUrl 参数，用于从外部的图标库（比如 Iconfont）加载图标资源。
+// 该函数返回一个新的 React 组件，使用该组件可以在页面中渲染从 Iconfont 加载的图标。
 const customCache = new Set<string>();
 
 export default function createFromIconfont(scriptUrl: string): FunctionComponent<IconProps> {

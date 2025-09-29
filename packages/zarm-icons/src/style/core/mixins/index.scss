@@ -2,8 +2,19 @@
 
 $keyframesSeparator: '_';
 
+// .button__icon，get-block(&) 会返回 button
 @mixin define($key, $value) {
   $block: str-replace(get-block(&), '.', '');
 
   --#{$key}: var(--#{$block + $blockSeparator + $key}, #{$value});
+}
+
+// <div class="button__icon"></div>
+
+// .button__icon {
+//   @include define('color', '#f00');
+// }
+
+.button__icon {
+  --button_color: #f00;
 }

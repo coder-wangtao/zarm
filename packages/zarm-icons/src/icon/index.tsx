@@ -1,5 +1,5 @@
 import { createBEM } from '@zarm-design/bem';
-import { paramCase } from 'change-case';
+import { paramCase } from 'change-case'; // 这个函数用于将字符串从驼峰命名转换为短横线命名（例如，camelCase 转换为 camel-case）。
 import * as React from 'react';
 import { IconContext } from '../context';
 import createFromIconfont from './IconFont';
@@ -31,7 +31,7 @@ const Icon = React.forwardRef<HTMLElement, IconProps>((props, ref) => {
   const { prefixCls = 'za' } = React.useContext(IconContext);
 
   const bem = createBEM('icon', { prefixCls });
-
+  // 使用 paramCase 将图标名称从驼峰式命名（例如 iconName）转换为短横线命名（例如 icon-name）。然后，通过 replace('svg-', '') 移除掉可能存在的 'svg-' 前缀。
   const decamelizeName = paramCase(name).replace('svg-', '');
   const iconClassName = bem(decamelizeName);
   const isFont =

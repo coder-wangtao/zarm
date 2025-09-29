@@ -1,6 +1,19 @@
 @import 'variables';
 @import 'functions';
 
+// @include b('title', 'large') {
+//   font-size: 16px;
+//   color: blue;
+// }
+// 如果假设：
+// $prefixCls = 'card'，
+// $blockSeparator = '__'，
+// 则 get-selector('.' + $prefixCls, $blockSeparator, $blocks...) 会生成 .card__title__large，而最终生成的 CSS 会是：
+// .card-title,.card-large {
+//   font-size: 16px;
+//   color: blue;
+// }
+
 @mixin b($blocks...) {
   $selector: get-selector('.' + $prefixCls, $blockSeparator, $blocks...);
   #{$selector} {
@@ -8,10 +21,20 @@
   }
 }
 
+// .card__title--large {
+//   @include e('title', 'image') {
+//     color: red;
+//   }
+// }
+
 @mixin e($elements...) {
   $selector: '';
-  $prefix: get-block(&);
+  $prefix: get-block(&); // & =.za-button  & .za-button--primary
 
+  // selector-nest("ul", "li") // ul li
+  // selector-nest(".warning", "alert", "div") // .warning div, alert div
+  // selector-append("div", ".myInput") // div.myInput
+  // selector-append(".warning", "__a") 结果: .warning__a
   @if contains-modifier(&) {
     @each $element in $elements {
       $newElement: selector-nest(&, selector-append($prefix, $elementSeparator + $element));
@@ -22,15 +45,13 @@
 
       $selector: $selector + $newElement + ',';
     }
-  }
-  @else {
+  } @else {
     @if contains-element(&) {
       @each $element in $elements {
         $newElement: selector-nest(&, selector-append($prefix, $elementSeparator + $element)) + ',';
         $selector: $selector + $newElement + ',';
       }
-    }
-    @else {
+    } @else {
       $selector: get-selector('&', $elementSeparator, $elements...);
     }
   }
@@ -50,8 +71,7 @@
     @each $modifier in $modifiers {
       $selector: $selector + '&' + $prefix + $modifierSeparator + $modifier + ',';
     }
-  }
-  @else {
+  } @else {
     $selector: get-selector('&', $modifierSeparator, $modifiers...);
   }
 
