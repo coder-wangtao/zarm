@@ -34,6 +34,9 @@
 // 查找替换
 // replace substring with another string
 // credits: https://css-tricks.com/snippets/sass/str-replace-function/
+// 递归实现
+// $test2: str-replace("2025-09-29", "-", "/");
+// "2025/09/29"
 @function str-replace($string, $search, $replace: '') {
   $index: str-index($string, $search);
   @if $index {

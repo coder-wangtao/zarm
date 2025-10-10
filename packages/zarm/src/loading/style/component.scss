@@ -2,7 +2,20 @@
 
 $loading-spinner-count: 8;
 
+// @mixin define($key, $value) {
+//   $block: str-replace(get-block(&), '.', '');
+//   --#{$key}: var(--#{$block + $blockSeparator + $key}, #{$value});
+// }
+
 @include b(loading) {
+  // --size: 24px;
+  // --size-large: 36px;
+  // --stroke-color: #e6e6e6;
+  // --stroke-active-color: var(--za-theme-primary);
+  // --spinner-item-color: #80858e;
+  // --spinner-item-width: 3px;
+  // --spinner-item-height: 32%;
+  // --spinner-item-border-radius: 1.5px;
   @include define(size, 24px);
   @include define(size-large, 36px);
   @include define(stroke-color, #e6e6e6);
@@ -14,8 +27,8 @@ $loading-spinner-count: 8;
 
   display: inline-block;
   position: relative;
-  transform: rotate(-90deg);
-  vertical-align: middle;
+  transform: rotate(-90deg); // 使元素旋转 -90 度（顺时针旋转 90 度）。
+  vertical-align: middle; // 设置元素的垂直对齐方式，使元素相对于其父元素或周围的元素居中对齐。
 
   @include loading-size(var(--size));
 
@@ -32,19 +45,23 @@ $loading-spinner-count: 8;
 
     svg {
       vertical-align: top;
+      // animation: za-loading_rotate360 2s linear infinite;
       @include animation(rotate360, 2s linear infinite);
     }
 
     circle {
-      stroke-linecap: round;
+      stroke-linecap: round; // 定义线条端点的形状。 // round：端点为半圆形，线条看起来更圆滑
       stroke: var(--stroke-active-color);
+      // animation: za-loading_rotate-circular 1.5s ease-in-out infinite;
       @include animation(rotate-circular, 1.5s ease-in-out infinite);
     }
   }
 
   @include m(spinner) {
+    // animation: za-loading_rotate360 2s linear infinite;
     @include animation(rotate360, 0.8s linear infinite);
 
+    // 把圆环旋转动画分成 8 步，每次跳 45°，就像钟表秒针跳动，而不是平滑旋转。
     animation-timing-function: steps($loading-spinner-count);
 
     div {
@@ -73,22 +90,26 @@ $loading-spinner-count: 8;
     }
   }
 
-  /* sizes */
+  // /* sizes */
   @include m(lg) {
     @include loading-size(var(--size-large));
   }
 
   @include keyframes(rotate-circular) {
+    // 	线条几乎不可见（只有1个像素），动画开始
     0% {
+      //stroke-dasharray（线段长度）
       stroke-dasharray: 1, 200;
+      //stroke-dashoffset（线段偏移量）
       stroke-dashoffset: 0;
     }
-
+    // // 线条长度增长，看起来像一段弧在移动
     50% {
       stroke-dasharray: 120, 200;
       stroke-dashoffset: -60;
     }
 
+    // 弧形继续往前滚动，形成连续旋转的效果
     100% {
       stroke-dasharray: 120, 200;
       stroke-dashoffset: -180;

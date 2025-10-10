@@ -10,10 +10,32 @@ $keyframesSeparator: '_';
   --#{$key}: var(--#{$block + $blockSeparator + $key}, #{$value});
 }
 
+// $keyframesSeparator: '-';
+// .box {
+//   @include keyframes(fade) {
+//     0% {
+//       opacity: 0;
+//     }
+//     100% {
+//       opacity: 1;
+//     }
+//   }
+//   animation: box-fade 2s infinite;
+// }
+
+// @keyframes box-fade {
+//   0% { opacity: 0; }
+//   100% { opacity: 1; }
+// }
+// .box {
+//   animation: box-fade 2s infinite;
+// }
+
 @mixin keyframes($name) {
   $block: str-replace(get-block(&), '.', '');
   $selector: $block + $keyframesSeparator + $name;
 
+  // 在根层级生成 @keyframes，防止嵌套污染
   @at-root {
     @keyframes #{$selector} {
       @content;
@@ -65,8 +87,7 @@ $keyframesSeparator: '_';
   &:after {
     @if $positions == 'none' {
       content: none;
-    }
-    @else {
+    } @else {
       content: '';
       pointer-events: none;
       position: absolute;
