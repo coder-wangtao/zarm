@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
-import { IntlProvider, FormattedMessage } from 'react-intl';
-import Context from '@/utils/context';
 import Locales from '@/locale';
+import Context from '@/utils/context';
+import React, { useContext } from 'react';
+import { FormattedMessage, IntlProvider } from 'react-intl';
 import './style.scss';
 
 const Footer = () => {
   const { locale } = useContext(Context);
-
+  //
   return (
     <IntlProvider locale="zh-CN" messages={Locales[locale]}>
       <footer>

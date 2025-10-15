@@ -1,10 +1,10 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
-import { Popper } from 'zarm';
-import { QRCodeSVG } from 'qrcode.react';
 import Container from '@/web/components/Container';
 import Meta from '@/web/components/Meta';
+import { QRCodeSVG } from 'qrcode.react';
+import React, { useState } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { useHistory } from 'react-router-dom';
+import { Popper } from 'zarm';
 import './style.scss';
 
 const Page = () => {

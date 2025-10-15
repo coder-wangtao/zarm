@@ -10,6 +10,7 @@ import { Route, Switch } from 'react-router-dom';
 import { Toast } from 'zarm';
 import './style.scss';
 
+// 使用 zarm 的 Toast 来显示全局加载状态。
 const Loading = () => {
   React.useEffect(() => {
     const { close } = Toast.show({ icon: 'loading', duration: 0 });
@@ -20,7 +21,7 @@ const Loading = () => {
 
   return null;
 };
-
+// 你使用了 react-loadable 的 Loadable.Map 来动态加载组件和样式：
 const LoadableComponent = (component) => {
   const loader = { page: component.module };
   const compName = pascalCase(component.key);
@@ -49,6 +50,7 @@ const App = () => {
     <SentryBoundary>
       <Suspense fallback={<Loading />}>
         <Switch>
+          {/* finished */}
           <Route exact path="/" component={lazy(() => import('@/demo/pages/Index'))} />
           {[...general, ...form, ...feedback, ...view, ...navigation, ...hooks, ...other].map(
             (component, i) => (

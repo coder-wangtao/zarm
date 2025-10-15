@@ -8,6 +8,7 @@ import classnames from 'classnames';
 import { QRCodeSVG } from 'qrcode.react';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+// react-loadable 是一个用于懒加载 React 组件的库，
 import Loadable from 'react-loadable';
 import { Redirect, Route, Switch, useParams, useRouteMatch } from 'react-router-dom';
 import { Icon, Popper } from 'zarm';
@@ -15,8 +16,9 @@ import './style.scss';
 
 const LoadableComponent = (component) => {
   return Loadable({
-    loader: component.module,
+    loader: component.module, // 异步加载组件
     render: (loaded, props) => {
+      // 自定义渲染函数
       return <Markdown document={loaded.default} component={component} {...props} />;
     },
     loading: () => null,
@@ -32,6 +34,7 @@ const Simulator = () => {
   const [affix, setAffix] = useState(JSON.parse(window.localStorage['simulator-affix'] || false));
 
   useEffect(() => {
+    // 向一个 iframe（或其它嵌入的 window 对象）发送消息。
     !/(iPhone|iPad|iPod|iOS|Android)/i.test(navigator.userAgent) &&
       simulatorRef.current.contentWindow.postMessage({ locale }, '*');
   }, [locale]);

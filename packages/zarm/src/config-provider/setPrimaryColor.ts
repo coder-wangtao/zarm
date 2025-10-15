@@ -2,6 +2,7 @@ import Color from 'color';
 import type { ConfigProviderProps } from './interface';
 
 const setPrimaryColor = (color: ConfigProviderProps['primaryColor']) => {
+  // 处理主题色
   document.documentElement.style.setProperty('--za-theme-primary', color!);
   document.documentElement.style.setProperty(
     '--za-theme-primary-dark',

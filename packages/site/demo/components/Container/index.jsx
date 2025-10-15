@@ -1,9 +1,9 @@
-import React, { useRef, useEffect, useState } from 'react';
-import classnames from 'classnames';
-import { Icon, Radio, Popper, ConfigProvider } from 'zarm';
+import { assets } from '@/site.config';
 import Context from '@/utils/context';
 import Events from '@/utils/events';
-import { assets } from '@/site.config';
+import classnames from 'classnames';
+import React, { useEffect, useState } from 'react';
+import { ConfigProvider, Icon, Popper, Radio } from 'zarm';
 import enUS from 'zarm/config-provider/locale/en_US';
 import zhCN from 'zarm/config-provider/locale/zh_CN';
 import './style.scss';
@@ -21,15 +21,14 @@ const Container = (props) => {
   const currentLocale = locale === 'enUS' ? enUS : zhCN;
 
   useEffect(() => {
+    // TODO: 看一下iframe的表现
     window.scrollTo(0, 0);
-
     Events.on(window, 'message', ({ data }) => {
       if (data.locale) {
         setLocale(data.locale);
       }
     });
   }, [primaryColor, theme]);
-
   return (
     <ConfigProvider theme={theme} primaryColor={primaryColor} locale={currentLocale}>
       <div className={cls}>
@@ -81,6 +80,7 @@ const Container = (props) => {
           >
             <span className="setting" />
           </Popper>
+          {/* 这行代码在检查「当前窗口和父窗口的 iframe 数量是否一致」。 */}
           {window.frames.length === window.parent.frames.length && (
             <>
               <div className="lang">

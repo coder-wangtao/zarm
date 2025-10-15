@@ -1,8 +1,9 @@
+import Meta from '@/web/components/Meta';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import Meta from '@/web/components/Meta';
 import './style.scss';
 
+// Resource
 const RESOURCES = [
   {
     icon: require('./images/icon-zarm.png'),

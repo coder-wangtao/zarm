@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import { useRouteMatch, useParams } from 'react-router-dom';
-import { pascalCase } from 'change-case';
-import { Menu } from 'zarm-web';
-import { FormattedMessage } from 'react-intl';
+import { components, documents } from '@/site.config';
 import Context from '@/utils/context';
-import { documents, components } from '@/site.config';
+import { pascalCase } from 'change-case';
+import React, { useContext } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { useParams, useRouteMatch } from 'react-router-dom';
+import { Menu } from 'zarm-web';
 import './style.scss';
 
 const getDocs = (docs) =>
@@ -48,7 +48,7 @@ const getComponents = (comps, locale) =>
 const MenuComponent = () => {
   const { locale } = useContext(Context);
   const params = useParams();
-  const isComponentPage = !!useRouteMatch('/components');
+  const isComponentPage = !!useRouteMatch('/components'); // 是components页面
 
   let selectedKeys;
   let menuRender;

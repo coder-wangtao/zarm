@@ -1,28 +1,28 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { IntlProvider, FormattedMessage } from 'react-intl';
-import { Popup, Radio, Icon } from 'zarm';
-import { Dropdown, Menu } from 'zarm-web';
+import Locales from '@/locale';
+import { assets } from '@/site.config';
+import Context from '@/utils/context';
+import Events from '@/utils/events';
+import MenuComponent from '@/web/components/Menu';
+import { Search as SearchIcon } from '@zarm-design/icons';
+import pkg from '@zarmDir/package.json';
 import { Select } from 'antd';
-import { Search as SearchIcon, Close as CloseIcon } from '@zarm-design/icons';
 import classnames from 'classnames';
 import docsearch from 'docsearch.js';
-import MenuComponent from '@/web/components/Menu';
-import { assets } from '@/site.config';
-import Events from '@/utils/events';
-import Context from '@/utils/context';
-import Locales from '@/locale';
-import pkg from '@zarmDir/package.json';
 import 'docsearch.js/dist/cdn/docsearch.min.css';
-import './style.scss';
+import React, { useEffect, useRef, useState } from 'react';
+import { FormattedMessage, IntlProvider } from 'react-intl';
+import { useLocation } from 'react-router-dom';
+import { Icon, Popup, Radio } from 'zarm';
+import { Dropdown, Menu } from 'zarm-web';
 import 'zarm/style/entry';
+import './style.scss';
 
 const initDocSearch = () => {
   docsearch({
-    apiKey: '44e980b50447a3a5fac9dc2a4808c439',
-    indexName: 'zarm',
-    inputSelector: '.search input',
-    debug: false,
+    apiKey: '44e980b50447a3a5fac9dc2a4808c439', // 替换成你自己的 Algolia API 密钥
+    indexName: 'zarm', // 替换成你在 Algolia 中的索引名称
+    inputSelector: '.search input', // 选择器，指向你想要初始化搜索的容器（例如输入框的 ID）
+    debug: false, // 可选：启用调试模式，可以帮助你查看调试信息
   });
 };
 
@@ -38,6 +38,7 @@ const Header = ({ children }) => {
 
   const keyupEvent = (event) => {
     if (event.keyCode === 83 && event.target === document.body) {
+      // 当按下 'S' 键时，且事件发生在页面的 body 元素上，条件成立。
       searchInput.current.focus();
     }
   };
@@ -129,6 +130,8 @@ const Header = ({ children }) => {
   );
 
   return (
+    // locale 属性定义了应用程序的当前语言和区域。
+    // messages 属性接受一个包含翻译字符串的对象，这些字符串会在应用中根据当前 locale 来进行替换。
     <IntlProvider locale="zh-CN" messages={Locales[locale]}>
       <Context.Provider value={{ locale }}>
         <header>
@@ -145,6 +148,7 @@ const Header = ({ children }) => {
             <nav>
               <div className="search">
                 <SearchIcon />
+                {/* FormattedMessage组件会根据当前 locale 和提供的 id，自动显示正确的翻译内容。 */}
                 <FormattedMessage id="app.home.nav.search">
                   {(txt) => <input placeholder={txt} ref={searchInput} />}
                 </FormattedMessage>
@@ -176,8 +180,7 @@ const Header = ({ children }) => {
                     },
                   ]}
                   onChange={(version) => {
-                    if (version)
-                      window.location.href = `https://${version}.zarm.design`;
+                    if (version) window.location.href = `https://${version}.zarm.design`;
                   }}
                 />
               </div>

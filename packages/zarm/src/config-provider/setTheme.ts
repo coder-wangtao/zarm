@@ -79,6 +79,7 @@ const themes = {
 } as const;
 
 const setTheme = (value: ConfigProviderProps['theme']) => {
+  // 处理主题
   document.body.setAttribute('data-theme', value!);
   Object.keys(themes).forEach((key) => {
     value === 'dark'

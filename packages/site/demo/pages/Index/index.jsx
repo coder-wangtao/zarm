@@ -1,14 +1,14 @@
-import React, { useEffect, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
-import { IntlProvider, FormattedMessage } from 'react-intl';
-import { Panel, List } from 'zarm';
-import { components } from '@/site.config';
-import { pascalCase } from 'change-case';
 import Container from '@/demo/components/Container';
 import Footer from '@/demo/components/Footer';
+import Locales from '@/locale';
+import { components } from '@/site.config';
 import Context from '@/utils/context';
 import Events from '@/utils/events';
-import Locales from '@/locale';
+import { pascalCase } from 'change-case';
+import React, { useContext, useEffect } from 'react';
+import { FormattedMessage, IntlProvider } from 'react-intl';
+import { useHistory } from 'react-router-dom';
+import { List, Panel } from 'zarm';
 import './style.scss';
 
 const Child = () => {
@@ -74,6 +74,8 @@ const Child = () => {
 };
 
 const Page = () => {
+  // 在页面刷新或重新加载时，保存并恢复页面的滚动位置。
+  // 简单来说，就是当用户滚动到某个位置，然后刷新或跳转回来时，页面会自动滚动到之前的位置。
   const setPageScroll = () => {
     window.sessionStorage.indexPageScroll = window.scrollY;
   };

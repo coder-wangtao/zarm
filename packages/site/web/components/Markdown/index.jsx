@@ -32,8 +32,10 @@ export default (props) => {
     };
   }, []);
 
+  // 自定义 marked（Markdown 转 HTML 库）的渲染器，并结合 Prism.js 进行代码高亮，同时在组件文档页对代码块生成 CodeSandbox 预览。
   const renderer = {
     table: (header, body) => {
+      // 自定义 表格渲染
       return `<div class="grid-container"><table class="grid"><thead>${header}</thead><tbody>${body}</tbody></table></div>`;
     },
     code: (code, language) => {
@@ -41,7 +43,6 @@ export default (props) => {
         Object.keys(Prism.languages).indexOf(language) > -1
           ? Prism.highlight(code, Prism.languages[language], language)
           : code;
-
       if (!isComponentPage(component.key)) {
         return `<pre class="language-${language}">${highlightCode}</pre>`;
       }
