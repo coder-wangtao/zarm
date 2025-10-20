@@ -44,11 +44,21 @@
   border-color: $border-color;
   color: $text-color;
 
+  // .za-button--shadow{
+  //     box-shadow: $shadow;
+  // }
+
   @include m(shadow) {
     box-shadow: $shadow;
   }
 
+  // .za-button--primary .za-loading.za-loading--circular circle
   @include b(loading) {
+    //za-loading--circular{
+    //    circle {
+    //      stroke: $loading-color;
+    //    }
+    // }
     @include m(circular) {
       circle {
         stroke: $loading-color;
@@ -57,6 +67,7 @@
   }
 
   &:active {
+    //::active伪类用于设置元素被点击时的样式
     background-color: $active-background;
     border-color: $active-border-color;
     color: $active-text-color;

@@ -25,7 +25,14 @@ export interface ButtonCssVars {
   '--shadow'?: React.CSSProperties['boxShadow'];
 }
 
+// Button 组件最终既可以是 <button> 也可以是 <a>，但在一次调用中：
+// 你只会用到一部分属性：
+// 如果渲染 <a> → 只会用到 href, onClick 等
+// 如果渲染 <button> → 只会用到 htmlType, onClick 等
+
 export type AnchorButtonProps = {
+  // mimeType：可以用来设置 <a> 的 type 属性（比如 application/pdf 等）。
+  // onClick：点击事件处理函数，专门针对 <a> 元素。
   mimeType?: string;
   onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 } & BaseButtonProps &
@@ -68,19 +75,20 @@ const Button = React.forwardRef<unknown, ButtonProps>((props, ref) => {
 
   const cls = bem([
     {
-      [`${theme}`]: !!theme,
-      [`${size}`]: !!size,
-      [`${shape}`]: !!shape,
-      block,
-      ghost,
-      shadow,
-      disabled,
-      loading,
-      link: (restProps as AnchorButtonProps).href !== undefined,
+      [`${theme}`]: !!theme, // button 主题
+      [`${size}`]: !!size, // 大小 默认md
+      [`${shape}`]: !!shape, // 形状 默认radius ，还有rect circle round
+      block, // button 独占一行
+      ghost, // 是否是幽灵按钮，就是黑色主题 中空
+      shadow, // 是否带阴影
+      disabled, // 是否禁用
+      loading, // 是否是loading状态
+      link: (restProps as AnchorButtonProps).href !== undefined, // 是否为链接按钮
     },
     className,
   ]);
 
+  // icon 按钮图标
   const contentRender =
     !!icon || loading ? (
       <div className={bem('content')}>
@@ -100,6 +108,7 @@ const Button = React.forwardRef<unknown, ButtonProps>((props, ref) => {
     }
   };
 
+  // 链接按钮
   if ((restProps as AnchorButtonProps).href !== undefined) {
     const { mimeType, ...anchorRest } = restProps;
     return (

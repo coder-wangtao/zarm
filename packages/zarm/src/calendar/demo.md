@@ -9,6 +9,7 @@ import { Radio, DateSelect, List, Calendar } from 'zarm';
 const Demo = () => {
   const [mode, setMode] = useState('single');
   const [value, setValue] = useState([new Date('2022/5/18'), new Date('2022/6/3')]);
+  // new Date('2022/5/1') 它返回的是一个 Date 对象
   const [min, setMin] = useState(new Date('2022/5/1'));
   const [max, setMax] = useState(new Date('2022/10/28'));
   const [custom, setCustom] = useState(false);

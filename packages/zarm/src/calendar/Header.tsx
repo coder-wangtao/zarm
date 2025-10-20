@@ -1,9 +1,9 @@
-import React, { useContext, useState } from 'react';
 import { createBEM } from '@zarm-design/bem';
 import { ArrowLeft, ArrowRight } from '@zarm-design/icons';
 import dayjs from 'dayjs';
-import PickerView from '../picker-view';
+import React, { useContext, useState } from 'react';
 import { ConfigContext } from '../config-provider';
+import PickerView from '../picker-view';
 import parseDataSource from './utils/parseDataSource';
 
 interface HeaderProps {
@@ -22,15 +22,46 @@ function Header(props: HeaderProps) {
 
   const { changeMonth, months, currentMonth } = props;
 
+  // 根据传过的value[0] 匹配到 当前月
   const current = months[currentMonth] || new Date();
   const year = current.getFullYear();
   const month = current.getMonth();
+  //
   const title = dayjs().year(year).month(month).format(globalLocal?.Calendar?.yearMonthFormat);
-
+  //   {
+  //     "value": 2022,
+  //     "label": 2022,
+  //     "children": [
+  //         {
+  //             "value": 4,
+  //             "label": "5月"
+  //         },
+  //         {
+  //             "value": 5,
+  //             "label": "6月"
+  //         },
+  //         {
+  //             "value": 6,
+  //             "label": "7月"
+  //         },
+  //         {
+  //             "value": 7,
+  //             "label": "8月"
+  //         },
+  //         {
+  //             "value": 8,
+  //             "label": "9月"
+  //         },
+  //         {
+  //             "value": 9,
+  //             "label": "10月"
+  //         }
+  //     ]
+  // }
   const dataSource = parseDataSource(months, locale);
-
   const currentValue = [year, month];
 
+  // 根据日期修改外面的月份
   const dateChange = (value) => {
     const day = dayjs().year(value[0]).month(value[1]);
     const index = months.findIndex((i) => {
@@ -83,6 +114,7 @@ function Header(props: HeaderProps) {
         </div>
       </div>
       {showDatePicker ? (
+        // TODO: PickerView待定
         <PickerView
           dataSource={Object.values(dataSource)}
           value={currentValue}

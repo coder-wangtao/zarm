@@ -16,9 +16,9 @@ export type CalendarMonthProps = BaseCalendarMonthProps & React.HTMLAttributes<H
 
 const CalendarMonthView = forwardRef<any, CalendarMonthProps>((props, ref) => {
   const { dateRender, min, max, disabledDate, onDateClick, dateMonth, value, mode } = props;
-
   const { prefixCls, locale: globalLocal } = useContext(ConfigContext);
 
+  // "Monday"
   const weekStartsOn = globalLocal?.Calendar.weekStartsOn;
 
   const bem = createBEM('calendar', { prefixCls });
@@ -41,7 +41,8 @@ const CalendarMonthView = forwardRef<any, CalendarMonthProps>((props, ref) => {
       const currentDate = dayjs(date);
       return mode === 'single'
         ? value[0] && currentDate.isSame(dayjs(value[0]), 'day')
-        : value.some((item) => (item ? currentDate.isSame(dayjs(item), 'day') : false));
+        : // 用于检测数组中 是否至少有一个元素满足指定条件
+          value.some((item) => (item ? currentDate.isSame(dayjs(item), 'day') : false));
     },
     [mode, value],
   );
@@ -83,7 +84,6 @@ const CalendarMonthView = forwardRef<any, CalendarMonthProps>((props, ref) => {
     const date = new Date(year, month, day);
     const dayjsDate = dayjs(date);
     const isToday = dayjs().isSame(dayjsDate, 'day');
-
     let text: string | ReactNode = '';
     if (typeof dateRender === 'function') {
       text = dateRender(date, value);
@@ -93,6 +93,7 @@ const CalendarMonthView = forwardRef<any, CalendarMonthProps>((props, ref) => {
       }
     }
 
+    // firstDay 就是设置首行的样式 偏移量
     const style =
       day === 1
         ? {
@@ -103,21 +104,20 @@ const CalendarMonthView = forwardRef<any, CalendarMonthProps>((props, ref) => {
     const rangeStatus = range(date);
     const className = bem('day', [
       {
-        disabled: isDisabled(date),
-        today: isToday,
-        selected: isSelected(date) && rangeStatus !== 'range',
-        range: rangeStatus === 'range',
-        d6: (day + firstDay) % 7 === 0 && !!rangeStatus,
-        d7: (day + firstDay) % 7 === 1 && !!rangeStatus,
-        start: rangeStatus === 'start',
-        end: rangeStatus === 'end',
-        last: rangeStatus === 'end' && (day === 1 || (day + firstDay) % 7 === 1),
+        disabled: isDisabled(date), // 是否禁用
+        today: isToday, // false
+        selected: isSelected(date) && rangeStatus !== 'range', // 不是rang 并选中
+        range: rangeStatus === 'range', // 范围模式 开始和结束中间的
+        d6: (day + firstDay) % 7 === 0 && !!rangeStatus, // 范围模式 周日
+        d7: (day + firstDay) % 7 === 1 && !!rangeStatus, // 范围模式 周一
+        start: rangeStatus === 'start', // 范围 开始
+        end: rangeStatus === 'end', // 范围 结束
+        last: rangeStatus === 'end' && (day === 1 || (day + firstDay) % 7 === 1), // 范围模式 当前月的最后一天
         first:
           rangeStatus === 'start' &&
-          (dayjsDate.daysInMonth() === day || (day + firstDay) % 7 === 0),
+          (dayjsDate.daysInMonth() === day || (day + firstDay) % 7 === 0), // 范围模式 当前月的第一天
       },
     ]);
-
     return (
       <li
         key={`${year}-${month}-${day}`}
@@ -131,9 +131,21 @@ const CalendarMonthView = forwardRef<any, CalendarMonthProps>((props, ref) => {
   };
 
   const renderDays = (year: number, month: number): ReactNode[] => {
+    // .date(1)：设置日期为 1 号，也就是把这个日期对象改成当月的第一天。
     const date = dayjs().year(year).month(month).date(1);
     const daysInMonth = date.daysInMonth();
-    let firstDay = date.day();
+    let firstDay = date.day(); // 返回当月第一天星期几，值是 0~6：
+    // 星期日不是第一天
+    // 一周从 星期一开始
+    // 如果 firstDay === 0（原本是星期日）
+    // → 调整为 0 + 6 = 6
+    // → 放到一周的最后一天（星期日成为第 7 列）
+
+    // 否则 firstDay - 1
+    // → 原来的星期一（1）变 0（第一列）
+    // → 星期二（2）变 1
+    // → …
+    // → 星期六（6）变 5
     if (weekStartsOn !== 'Sunday') {
       firstDay = firstDay === 0 ? firstDay + 6 : firstDay - 1;
     }

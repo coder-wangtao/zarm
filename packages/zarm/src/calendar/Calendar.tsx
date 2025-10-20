@@ -69,8 +69,8 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>((props, ref) =>
     onChange,
     onSelect,
     mode,
-    max: maxDate,
-    min: minDate,
+    max: maxDate, // 最大日期
+    min: minDate, // 最小日期
     direction,
     header,
   } = props;
@@ -81,7 +81,7 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>((props, ref) =>
 
   const bem = createBEM('calendar', { prefixCls });
   const cls = bem([className]);
-
+  // 外面传进来 [value]
   const [state, setState] = useState<CalendarStates>(() => {
     return { ...parseState(props), step: 0 };
   });
@@ -112,6 +112,7 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>((props, ref) =>
     return direction === 'horizontal';
   }, [direction]);
 
+  // 根据min max日期 生成一个months(一个月范围)
   const months = useMemo(() => {
     const month: Date[] = [];
     const dateMax = dayjs(max);
@@ -125,6 +126,7 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>((props, ref) =>
     return month;
   }, [max, min]);
 
+  // 根据value[0]||当前时间 去获取当前月的索引
   const currentMonthIndex = useMemo(() => {
     const currentTime = dayjs(value[0] || new Date());
     return months.findIndex((current) => {
@@ -167,6 +169,7 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>((props, ref) =>
         value,
         step: currentStep === steps ? 0 : currentStep,
       }));
+
       if ((currentStep >= steps || mode === 'multiple') && typeof onChange === 'function') {
         onChange(value);
       }
@@ -205,6 +208,7 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>((props, ref) =>
     return months.map((item) => renderMonth(item));
   }, [renderMonth]);
 
+  // showHeader 满足了bailout四要素
   const showHeader = useMemo(() => {
     return direction === 'horizontal' && header;
   }, [direction, header]);
@@ -229,6 +233,7 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>((props, ref) =>
 
   const monthsContent = useMemo(() => {
     if (isHorizontal) {
+      // 水平走Carousel
       return (
         <Carousel
           className={bem('body')}
@@ -241,6 +246,7 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>((props, ref) =>
         </Carousel>
       );
     }
+    // 垂直
     return (
       <div className={bem('body')} ref={scrollBodyRef} onScroll={bodyScroll}>
         {content}
@@ -258,6 +264,7 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>((props, ref) =>
   }, [direction, minDate, maxDate]);
 
   const timer = useRef<ReturnType<typeof setTimeout>>();
+
   useScroll({
     container: scrollBodyRef,
     onScroll: () => {
@@ -280,7 +287,9 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>((props, ref) =>
             // @ts-ignore
             carouselRef?.current?.onSlideTo(idx)!;
           }}
+          // [min max] 月份得到数组
           months={months}
+          // 当前月份的索引
           currentMonth={currentMonth}
         />
       )}
