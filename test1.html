@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>渐进显示示例</title>
+    <style>
+      /* 初始状态隐藏并透明 */
+      #fadeInElement {
+        opacity: 0;
+        transition: opacity 2s ease; /* 2秒渐变效果 */
+      }
+
+      /* 激活状态显示 */
+      #fadeInElement.show {
+        opacity: 1;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: sans-serif;
+        background-color: #f0f0f0;
+      }
+
+      #fadeInElement {
+        padding: 20px 40px;
+        background-color: #4caf50;
+        color: white;
+        font-size: 24px;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="fadeInElement">渐进显示的内容</div>
+
+    <script>
+      // 页面加载后延迟0.5秒添加类，让元素渐渐显示
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          document.getElementById('fadeInElement').classList.add('show');
+        }, 500);
+      });
+    </script>
+  </body>
+</html>

@@ -2,6 +2,7 @@ import { createBEM } from '@zarm-design/bem';
 import dayjs from 'dayjs';
 import throttle from 'lodash/throttle';
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+// Carousel
 import { Transition } from 'react-transition-group';
 import Carousel from '../carousel';
 import { ConfigContext } from '../config-provider';
