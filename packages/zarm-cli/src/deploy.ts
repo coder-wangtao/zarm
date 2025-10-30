@@ -18,7 +18,7 @@ export interface IDeployConfig {
 
 export function getProjectConfig(config: Configuration): Configuration {
   const { entries, setBabelOptions, banner, setRules, setPlugins, ...webpackConfig } =
-    getCustomConfig(); // 获取自定义的 Webpack 配置
+    getCustomConfig(); // 获取自定义的 Webpack 配置 zarm.config.js
 
   config.entry = {}; // 清空默认的入口配置
   config.plugins = config.plugins || []; // 确保插件数组存在
