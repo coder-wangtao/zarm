@@ -1,10 +1,15 @@
+// 基于 BetterScroll 的 React Wheel 组件实现，用于实现滚轮选择器（类似 iOS Picker View）
+
 import BScroll, { BScrollInstance } from '@better-scroll/core';
+// 使用 BetterScroll 的 wheel 插件来实现滚轮效果。
 import WheelPlugin from '@better-scroll/wheel';
 import { createBEM } from '@zarm-design/bem';
 import isEqual from 'lodash/isEqual';
 import React, { createRef, useEffect, useRef } from 'react';
 import { ConfigContext } from '../config-provider';
+// TODO:
 import { resolvedFieldNames } from '../picker-view/utils';
+// TODO:
 import { useEventCallback, usePrevious, useSafeLayoutEffect } from '../utils/hooks';
 import type { HTMLProps } from '../utils/utilityTypes';
 import type { BaseWheelProps, WheelItem, WheelValue } from './interface';
@@ -81,6 +86,7 @@ const Wheel: React.FC<WheelProps> = (props) => {
     }
   }, []);
 
+  // TODO: OK
   useSafeLayoutEffect(() => {
     let resize: ResizeObserver | null;
     heightRef.current = wheelWrapperRef.current?.clientHeight || 0;
@@ -88,18 +94,29 @@ const Wheel: React.FC<WheelProps> = (props) => {
     if (wheelWrapperRef.current) {
       scrollInstance.current = new BScroll(wheelWrapperRef.current, {
         wheel: {
+          // 初始化时选中的索引。
           selectedIndex: initIndex,
+          // 轮子内容容器的 class 名。
           wheelWrapperClass: bem('content'),
+          // 每一项的 class 名。
           wheelItemClass: bem('item'),
         },
+        // 滚动监听模式：
+        // /0：不监听滚动。
+        // 1：滚动时触发 scroll 事件（但不频繁）。
+        // 2：滚动时触发，较高频率。
+        // 3：滚动时高频触发，实时监听滚动位置（常用）。
         probeType: 3,
       });
 
       if (scrollInstance.current.scroller?.wrapper) {
         resize = new ResizeObserver((entries) => {
           const [entry] = entries || [];
+          // 如果高度没有变化，则直接返回
           if (entry.contentRect.height === heightRef.current) return;
+          // 更新记录的高度
           heightRef.current = entry.contentRect.height;
+          // 刷新滚动实例
           scrollInstance.current?.refresh();
         });
         resize.observe(scrollInstance.current.scroller.wrapper);
@@ -116,6 +133,7 @@ const Wheel: React.FC<WheelProps> = (props) => {
     };
   }, []);
 
+  // TODO: OK
   useEffect(() => {
     disabled && scrollInstance.current?.disable();
   }, [disabled]);
@@ -129,6 +147,7 @@ const Wheel: React.FC<WheelProps> = (props) => {
     handleScrollEnd();
   }, [dataSource, fieldNames, value]);
 
+  // TODO: OK
   useEffect(() => {
     const oldIndex = getSelectedIndex(prevValue, prevDataSource);
     const newIndex = getSelectedIndex(value, dataSource);
@@ -141,6 +160,7 @@ const Wheel: React.FC<WheelProps> = (props) => {
     }
   }, [value, defaultValue, dataSource, stopScroll, fieldNames.value]);
 
+  // TODO: OK
   const items = dataSource!.map((item, index) => {
     const itemCls = bem('item', [
       {

@@ -29,8 +29,16 @@ const config: Configuration = {
         test: /\.(css|scss)$/,
         use: [
           {
+            // loader: MiniCssExtractPlugin.loader
+            // 这个 loader 会替代 style-loader。
+            // 它的作用是把 CSS 从 JS 中分离出来，生成独立的 .css 文件。
+            // 最终这些 .css 文件会被 MiniCssExtractPlugin 插件提取并输出到你配置的输出目录中。
             loader: MiniCssExtractPlugin.loader, // 用 MiniCssExtractPlugin.loader 把样式提取出来。
             options: {
+              // options.publicPath: '../'
+              // 控制 CSS 文件中引用的资源（例如 url('./images/bg.png')）的路径前缀。
+              // 默认情况下，Webpack 会以 CSS 文件的输出位置为基准来解析资源路径。
+              // 如果你的 CSS 文件被输出到了类似 dist/css/ 目录，而图片在 dist/images/ 下，那么路径就得“往上一级”：
               publicPath: '../', // publicPath: '../' 让生成的 CSS 里的资源路径往上一级。
             },
           },

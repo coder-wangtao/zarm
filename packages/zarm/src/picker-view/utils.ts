@@ -8,6 +8,9 @@ import type {
   PickerOption,
   PickerValue,
 } from './interface';
+// const userFieldNames = { value: 'id', label: 'name' };
+// const fields = resolvedFieldNames(userFieldNames);
+// fields = { value: 'id', label: 'name', children: 'children' }
 
 const DEFAULT_FIELD_NAMES = {
   value: 'value',
@@ -15,13 +18,12 @@ const DEFAULT_FIELD_NAMES = {
   children: 'children',
 };
 
-export const resolvedFieldNames = <T = object>(
-  left: Partial<T> | undefined,
-) => {
+export const resolvedFieldNames = <T = object>(left: Partial<T> | undefined) => {
   const merged = { ...DEFAULT_FIELD_NAMES };
-  left && Object.keys(left).forEach((key) => {
-    merged[key] = left?.[key] || DEFAULT_FIELD_NAMES[key];
-  });
+  left &&
+    Object.keys(left).forEach((key) => {
+      merged[key] = left?.[key] || DEFAULT_FIELD_NAMES[key];
+    });
   return merged;
 };
 

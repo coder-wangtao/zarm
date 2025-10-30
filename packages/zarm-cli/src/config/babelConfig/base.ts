@@ -1,9 +1,9 @@
 export default {
   presets: [
     [
-      require.resolve('@babel/preset-env'), // 使用 @babel/preset-env 预设，自动选择适当的编译选项
+      require.resolve('@babel/preset-env'),
       {
-        modules: false, // 关闭模块转换，保持 ES 模块格式，通常用于 Webpack 中支持 Tree Shaking
+        modules: false, 
       },
     ],
     require.resolve('@babel/preset-react'), // 启用对 React JSX 语法的转换

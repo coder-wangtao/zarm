@@ -33,6 +33,14 @@ const gulpTask = (path?: string, outDir?: string, callback?: () => void) => {
       .pipe(
         sass
           .sync({
+            // includePaths 是 gulp-sass 插件提供的一个选项，用来告诉 SASS 编译器在哪里查找 SASS 导入的文件。
+            // 默认情况下，SASS 会从当前文件所在的目录开始查找导入路径。如果你要导入一个来自 node_modules 的包（例如 Bootstrap、Font Awesome 等），
+            // 你就必须指定一个额外的查找路径。
+            // 通过设置 includePaths: ['node_modules']，你告诉 SASS 编译器 node_modules 目录应该作为 SASS 文件的搜索路径，
+            // 这意味着你可以直接在 SASS 中使用 @import "~bootstrap/scss/bootstrap" 来导入 node_modules 中的文件。
+            // 例如，如果你写：
+            // @import "~bootstrap/scss/bootstrap";
+            // SASS 编译器会在 node_modules/bootstrap/scss 下查找 bootstrap.scss 文件，而不是相对路径。
             includePaths: ['node_modules'], // 设置 `node_modules` 为 SASS 的查找路径
             importer: (url) => {
               // 自定义 SASS 导入器

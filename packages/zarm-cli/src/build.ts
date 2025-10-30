@@ -17,7 +17,7 @@ const { name } = require(getProjectPath('package.json'));
 const showErrors = (errors) => {
   console.error('zarm cli: ');
   errors.forEach((e) => {
-    console.error(`  ${e}`);
+    console.error(`${e}`);
   });
   process.exit(2);
 };
@@ -27,7 +27,7 @@ const umdBuild = async ({ mode, path, outDir, libraryName, analyzer }, barActive
   libraryName = libraryName || name; // 如果没有传入 libraryName，使用 package.json 中的 name
 
   // 将路径字符串转换为数组，并获取每个路径的实际文件位置
-  const entryFiles = path.split(',').map((p) => getProjectPath(p));
+  const entryFiles = path.split(',').map((p) => getProjectPath(p)); // style文件路径和 js文件路径数组
 
   const customizePlugins = []; // 自定义插件数组
   const { banner } = getCustomConfig(); // 获取自定义配置中的 banner（横幅信息）
@@ -50,6 +50,7 @@ const umdBuild = async ({ mode, path, outDir, libraryName, analyzer }, barActive
       const config = webpackMerge(getProjectConfig(getWebpackConfig(type)), {
         entry: {
           [libraryName]: entryFiles, // 配置入口文件
+          // [zarm]:[src/style/entry.ts,src/index.ts]
         },
         output: {
           path: getProjectPath(outDir), /// 输出目录
@@ -135,6 +136,10 @@ const buildLibrary = async (
 // 主构建函数，根据传入的选项进行不同的构建操作
 export default async (options) => {
   const { mode, path, outFile, outDir } = options;
+  // model 打包格式
+  // path 文件原目录
+  // outDir 输出目录
+  // outFile 输出文件
   const errors = []; // 错误数组，用于收集参数错误
 
   // 如果没有定义 mode，加入错误

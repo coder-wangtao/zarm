@@ -1,3 +1,4 @@
+// 这意味着你要编译的所有 TypeScript 源文件都在 src 目录中，编译产物会输出到 dist 目录。
 {
   "include": ["src"],
   "compilerOptions": {

@@ -12,6 +12,11 @@ const { version } = require(path.resolve('./package.json'));
 
 commander.version(version);
 
+// zarm build --mode es --path src --out-dir es --copy-files --build-css,
+// zarm build --mode lib --path src --out-dir lib --copy-files --build-css",
+// zarm build --mode umd --path src/style/entry.ts,src/index.ts --out-dir dist --library-name zarm 
+// zarm build --mode umd-ugly --path src/style/entry.ts,src/index.ts --out-dir dist --library-name zarm",
+
 commander
   .command('build')
   .description('打包编译仓库')
