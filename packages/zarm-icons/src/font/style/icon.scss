@@ -3,11 +3,8 @@ $prefixCls: 'za' !default;
 @font-face {
   font-family: 'zaicon';
   src: url('../zaicon.eot');
-  src:
-    url('../zaicon.eot?#iefix') format('embedded-opentype'),
-    url('../zaicon.woff') format('woff'),
-    url('../zaicon.ttf') format('truetype'),
-    url('../zaicon.svg#zaicon') format('svg');
+  src: url('../zaicon.eot?#iefix') format('embedded-opentype'), url('../zaicon.woff') format('woff'),
+    url('../zaicon.ttf') format('truetype'), url('../zaicon.svg#zaicon') format('svg');
   font-weight: normal;
   font-style: normal;
 }

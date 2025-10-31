@@ -35,7 +35,7 @@ export default function createFromIconfont(scriptUrl: string): FunctionComponent
     }
     // fix https://github.com/ZhongAnTech/zarm/issues/835
     // @ts-ignore
-    const I = Icon.default ? Icon.default : Icon;
+      const I = Icon.default ? Icon.default : Icon;
     return (
       <I {...rest} ref={ref}>
         {content}

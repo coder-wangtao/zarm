@@ -88,3 +88,15 @@ default 用于 CommonJS (走 lib/index.js)。
 ],
 表示发布到 npm 时，只有 es/, lib/, types/ 目录会被包含进去。其余开发文件（如 scripts/、tests/）不会被发到 npm。
 
+
+
+
+// 把 ./svg 下的所有 SVG 图标生成一个名为 zaicon 的 web 字体。
+// 字体文件输出到 src/font。
+// 自动生成 CSS 类，类名前缀为 za-icon，方便在 HTML 或 React/Vue 中直接使用。
+"build:font": "webFontsHelper --src ./svg --fontName zaicon --fontPath src/font --className za-icon",
+
+// svgr 是一个把 SVG 转换成 React 组件 的工具。
+// ./svg：输入目录，也就是你所有的 SVG 文件所在的文件夹。
+// --out-dir ./src/react：输出目录，把生成的 React 组件放到 src/react 里。
+"build:react": "rimraf src/react && svgr ./svg --out-dir ./src/react",
