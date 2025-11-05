@@ -92,7 +92,7 @@ export const renderImperatively = (element: TargetElement) => {
     <RuntimeConfigProvider>
       <Wrapper ref={wrapperRef} />
     </RuntimeConfigProvider>,
-    element.props.mountContainer ?? getRuntimeConfig().mountContainer,
+    element.props.mountContainer ?? getRuntimeConfig().mountContainer,  // 传进来来 ?? document.body
   );
 
   return {

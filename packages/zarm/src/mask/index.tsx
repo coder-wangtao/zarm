@@ -18,6 +18,7 @@ export interface MaskCssVars {
 }
 
 export type MaskProps = BaseMaskProps &
+  // props and children && onclick && BaseMaskProps
   React.PropsWithChildren<HTMLProps<MaskCssVars>> & {
     onClick?: React.MouseEventHandler<HTMLDivElement>;
   };
@@ -40,23 +41,28 @@ const Mask = React.forwardRef<HTMLDivElement, MaskProps>((props, ref) => {
   } = props;
 
   const { prefixCls, mountContainer: globalMountContainer } = React.useContext(ConfigContext);
+  // zarm
   const bem = createBEM('mask', { prefixCls });
 
   const rgb = color === 'black' ? '0, 0, 0' : '255, 255, 255';
+
+  // 如果是数字去数字，否则取OpacityList里的字符串做枚举
   const backgroundOpacity = isFinite(opacity) ? opacity : OpacityList[opacity!];
 
   return (
     <Transition
       nodeRef={ref}
       visible={visible}
-      tranisitionName={`${prefixCls}-fade`}
-      duration={animationDuration}
-      forceRender={forceRender}
-      destroy={destroy}
+      tranisitionName={`${prefixCls}-fade`} // za-fade
+      duration={animationDuration} // 动画执行时间
+      forceRender={forceRender} // 强制渲染内容
+      destroy={destroy} // 不可见时卸载内容
       onEnter={() => {
+        // 进入
         afterOpen?.();
       }}
       onLeaveEnd={() => {
+        // 退出
         afterClose?.();
       }}
     >

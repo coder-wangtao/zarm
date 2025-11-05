@@ -59,9 +59,11 @@ const Transition: React.FC<TransitionProps> = (props) => {
     onLeaveEnd,
   } = props;
   const nodeRef = React.useRef<HTMLElement | null>();
+  // 当前状态
   const [state, setState] = React.useState(TransitionState.UNMOUNTED);
   const callbackRef = React.useRef<(event: Event) => void>(noop);
 
+  // 状态枚举
   const unmounted = TransitionState.UNMOUNTED === state;
   const enter = TransitionState.ENTER === state;
   const entering = TransitionState.ENTERING === state;
@@ -70,6 +72,7 @@ const Transition: React.FC<TransitionProps> = (props) => {
   const exited = TransitionState.EXITED === state;
   const running = enter || entering || leave || leaving;
 
+  // class
   const className = classnames({
     [`${tranisitionName}-enter`]: enter || entering,
     [`${tranisitionName}-enter-active`]: entering,
@@ -92,6 +95,7 @@ const Transition: React.FC<TransitionProps> = (props) => {
     nodeRef.current = node;
   };
 
+  // 外面传进来的ref就是拿的nodeRef.current
   React.useImperativeHandle(props.nodeRef, () => nodeRef.current!);
 
   // 清理事件监听
@@ -116,7 +120,15 @@ const Transition: React.FC<TransitionProps> = (props) => {
         if (!nodeRef.current) return;
         callbackRef.current = (event: Event) => {
           const target = event.target as HTMLElement;
-          // event.target 是触发动画结束事件的元素；
+          // // event.target 是触发动画结束事件的元素；
+          //
+          //   <div animationEndName>
+          //    避免事件冒泡误触发；
+          //      <div>
+          //           1111
+          //      </div>
+          //   </div>
+          //
           // 判断 target 是否包含我们要动画的 DOM 节点（nodeRef.current），避免事件冒泡误触发；
           if (!target.contains(nodeRef.current)) return;
           // next 是 Transition 提供的回调函数，用于通知动画结束。
@@ -175,7 +187,6 @@ const Transition: React.FC<TransitionProps> = (props) => {
             },
           });
         }
-
         return children?.({ className, style, visible }, setNodeRef);
       }}
     </InternalTransition>
