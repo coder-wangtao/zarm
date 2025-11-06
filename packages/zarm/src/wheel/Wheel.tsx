@@ -138,6 +138,7 @@ const Wheel: React.FC<WheelProps> = (props) => {
     disabled && scrollInstance.current?.disable();
   }, [disabled]);
 
+  // 如果找到了匹配项，就不做任何操作；如果没有找到，执行 handleScrollEnd()，可能是进行某些额外的操作，比如滚动结束时的行为处理。
   useEffect(() => {
     if (isEqual(prevDataSource, dataSource)) return;
     scrollInstance.current?.refresh();
