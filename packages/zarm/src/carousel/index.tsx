@@ -91,6 +91,7 @@ const Carousel = forwardRef<CarouselHTMLElement, CarouselProps>((props, ref) => 
     activeIndex: propActiveIndex!,
     activeIndexChanged: false,
   });
+
   // TODO: 搞定
   const [activeIndexState, setActiveIndexState] = useState(stateRef.current.activeIndex);
   // TODO: 搞定
@@ -183,17 +184,19 @@ const Carousel = forwardRef<CarouselHTMLElement, CarouselProps>((props, ref) => 
   // TODO: 搞定
   const onMoveTo = useCallback(
     (index: number, animationDurationNum: number) => {
-      const dom = carouselItemsRef.current;
-      const previousIndex = stateRef.current.activeIndex;
-      const activeIndexChanged = previousIndex !== index;
+      const dom = carouselItemsRef.current; // 获取当前轮播容器的 DOM。
+      const previousIndex = stateRef.current.activeIndex; // 获取上一次的 activeIndex
+      const activeIndexChanged = previousIndex !== index; // 判断当前索引是否发生变化，用于决定是否执行动画。
       // 如果轮播是 循环的，通常在 DOM 上会额外增加一个 前后克隆节点 用于无缝循环。
       // num = 1 表示在计算偏移时要考虑这个额外的克隆节点。
-      const num = loop ? 1 : 0;
-      const size = getBoundingClientRect(dom);
-      translateXRef.current = -size.width * (index + num);
+      const num = loop ? 1 : 0; // num = 1 用于在计算位移时偏移这额外的克隆节点。
+      const size = getBoundingClientRect(dom); // 获取轮播容器的宽高。
+      translateXRef.current = -size.width * (index + num); // 根据索引计算 X/Y 轴偏移量（translate），同时考虑循环克隆节点。
       translateYRef.current = -size.height * (index + num);
       doTransition({ x: translateXRef.current, y: translateYRef.current }, animationDurationNum);
 
+      // 如果超出最大索引，则回到 0。
+      // 如果小于 0，则跳到最后一个元素。
       if (index > count - 1) {
         index = 0;
       } else if (index < 0) {
@@ -259,6 +262,7 @@ const Carousel = forwardRef<CarouselHTMLElement, CarouselProps>((props, ref) => 
         }
         onMoving.current = false;
       }
+      // 防止用户是否有意地拖拽
       if (!state.intentional) {
         return false;
       }
@@ -317,6 +321,7 @@ const Carousel = forwardRef<CarouselHTMLElement, CarouselProps>((props, ref) => 
         }
         // 执行滑动到新的页面；
         // 返回 false 阻止默认行为。
+        //
         onSlideTo(activeIndex);
         return false;
       }
@@ -403,8 +408,10 @@ const Carousel = forwardRef<CarouselHTMLElement, CarouselProps>((props, ref) => 
     },
     className,
   ]);
+
   // TODO: 搞定
   const itemsStyle: CSSProperties = {};
+
   if (isVertical) {
     itemsStyle.height = height;
   }
