@@ -1,4 +1,4 @@
-// 使用@use-gesture/react实现的一个 拖拽滑动（useDrag）
+// 使用@use-gesture/react实现的一个 拖拽滑动（useDrag）暴露
 // useDrag 是一个 React Hook，用于监听 拖拽手势事件（鼠标或触摸）。
 // 主要做一些边缘逻辑处理
 // 1.是否处于正在滚动动画中

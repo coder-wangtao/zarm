@@ -1,4 +1,4 @@
-// 基于 BetterScroll 的 React Wheel 组件实现，用于实现滚轮选择器（类似 iOS Picker View）
+// 基于 BetterScroll 的 React Wheel 组件实现，用于实现滚轮选择器（类似 iOS Picker View）(不暴露)
 // BScroll.use(WheelPlugin);
 
 const [selectedCity, setSelectedCity] = useState('shanghai');

@@ -42,6 +42,7 @@ const PickerView = React.forwardRef<PickerViewInstance, PickerViewProps>((props,
   React.useEffect(() => {
     if (props.value === undefined) return;
     if (isEqual(props.value, innerValue)) return;
+    // 外面的状态绑定内部的状态
     setInnerValue(resolved(props).value);
   }, [props.value]);
 
@@ -50,6 +51,7 @@ const PickerView = React.forwardRef<PickerViewInstance, PickerViewProps>((props,
     [cols, innerValue, dataSource, fieldNames],
   );
 
+  // TODO:
   const reset = () => {
     setStopScroll(true);
     setTimeout(() => {
@@ -58,6 +60,7 @@ const PickerView = React.forwardRef<PickerViewInstance, PickerViewProps>((props,
     }, 0);
   };
 
+  // TODO:
   React.useImperativeHandle(ref, () => ({
     value: innerValue,
     items,

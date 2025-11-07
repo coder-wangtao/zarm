@@ -1,4 +1,4 @@
-// Button 组件最终既可以是 <button> 也可以是 <a>，但在一次调用中：
+// Button 组件最终既可以是 <button> 也可以是 <a>，但在一次调用中：暴露
 // 你只会用到一部分属性：
 // 如果渲染 <a> → 只会用到 href, onClick 等
 // 如果渲染 <button> → 只会用到 htmlType, onClick 等

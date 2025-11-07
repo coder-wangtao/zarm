@@ -1,4 +1,5 @@
-// Transition
+// Transition(不暴露)
+
 import { Transition } from 'react-transition-group';
 
 <Transition>

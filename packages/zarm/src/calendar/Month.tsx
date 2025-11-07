@@ -134,7 +134,7 @@ const CalendarMonthView = forwardRef<any, CalendarMonthProps>((props, ref) => {
     // .date(1)：设置日期为 1 号，也就是把这个日期对象改成当月的第一天。
     const date = dayjs().year(year).month(month).date(1);
     const daysInMonth = date.daysInMonth();
-    let firstDay = date.day(); // 返回当月第一天星期几，值是 0~6：
+    let firstDay = date.day(); // 返回当月第一天星期几，值是 0~6：0 1 2 3 4 5 6
     // 星期日不是第一天
     // 一周从 星期一开始
     // 如果 firstDay === 0（原本是星期日）

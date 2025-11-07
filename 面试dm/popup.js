@@ -1,4 +1,4 @@
-// popup
+// popup(暴露)
 <Trigger visible={visible} onClose={handleEsc}>
   <Mask></Mask>
   <Transition>

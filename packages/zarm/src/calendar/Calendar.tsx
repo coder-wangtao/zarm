@@ -114,6 +114,7 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>((props, ref) =>
   }, [direction]);
 
   // 根据min max日期 生成一个months(一个月范围)
+  // TODO: OK
   const months = useMemo(() => {
     const month: Date[] = [];
     const dateMax = dayjs(max);
@@ -128,6 +129,7 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>((props, ref) =>
   }, [max, min]);
 
   // 根据value[0]||当前时间 去获取当前月的索引
+  // TODO: OK
   const currentMonthIndex = useMemo(() => {
     const currentTime = dayjs(value[0] || new Date());
     return months.findIndex((current) => {
@@ -138,6 +140,7 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>((props, ref) =>
   const [currentMonth, setCurrentMonth] = useState<number>(currentMonthIndex);
 
   // 月历定位
+  // TODO: OK
   const scrollIntoView = useRef(false);
   const anchor = () => {
     const target = value[0] || new Date();
@@ -145,7 +148,7 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>((props, ref) =>
     const node = nodes.current[key]!;
     node?.el()?.scrollIntoView?.();
   };
-
+  // TODO: OK
   const handleDateClick = useCallback(
     (date: Date) => {
       const { step } = state;
@@ -164,7 +167,6 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>((props, ref) =>
         value[currentStep - 1] = date;
       }
       value.sort((item1: Date, item2: Date) => +item1 - +item2);
-
       setState((prevState) => ({
         ...prevState,
         value,
@@ -182,6 +184,7 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>((props, ref) =>
     [mode, state, value, onChange],
   );
 
+  // TODO:
   const renderMonth = useCallback(
     (dateMonth: Date) => {
       const key = `${dateMonth.getFullYear()}-${dateMonth.getMonth() + 1}`;
@@ -205,15 +208,20 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>((props, ref) =>
     [min, max, mode, value, dateRender, disabledDate, handleDateClick, nodes],
   );
 
+  // TODO:
   const content = useMemo(() => {
     return months.map((item) => renderMonth(item));
   }, [renderMonth]);
 
   // showHeader 满足了bailout四要素
+  // TODO:
   const showHeader = useMemo(() => {
     return direction === 'horizontal' && header;
   }, [direction, header]);
 
+  // TODO:
+  // 它会在用户滚动 scrollBodyRef 对应的容器时，计算当前显示的“元素”（对应某个日期），
+  // 然后更新状态 setScrollDate，显示当前滚动到的日期。
   const bodyScroll = throttle(() => {
     const weekNode = weekRef?.current;
     const body = scrollBodyRef.current;
@@ -232,6 +240,7 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>((props, ref) =>
     }
   }, 150);
 
+  // TODO:
   const monthsContent = useMemo(() => {
     if (isHorizontal) {
       // 水平走Carousel
@@ -260,12 +269,14 @@ const Calendar = React.forwardRef<HTMLDivElement, CalendarProps>((props, ref) =>
     );
   }, [mode, currentMonth, content, isHorizontal, scrollDate, scrolling]);
 
+  // TODO:
   useEffect(() => {
     !isHorizontal && anchor();
   }, [direction, minDate, maxDate]);
 
   const timer = useRef<ReturnType<typeof setTimeout>>();
 
+  // TODO:
   useScroll({
     container: scrollBodyRef,
     onScroll: () => {
