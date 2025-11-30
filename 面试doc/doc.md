@@ -33,4 +33,4 @@ md 文件编写组件的基本用法，使用 marked 这个库，自定义 marke
 
 demo
 
-针对吗每一个组件路由，使用 react-loadable 渲染一个 MarkDown 组件，MarkDown 组件同步对每个组件的 demo.md 中 markdown 每内容做正则匹配替换，使用浏览器端 Babel，将 JSX/ES6 转成浏览器可执行的 JS。最后将可执行的 JS 通过 new Function(...args)(...argv);来执行（创建一个新的作用域执行编译后的 JS 代码，使其能够访问 React、Zarm、GlobalContext 等变量。）
+针对每一个组件路由，使用 react-loadable 渲染一个自定义的 MarkDown 组件，自定义的MarkDown 组件同步对每个组件的 demo.md 中 markdown 每内容做正则匹配替换，使用浏览器端 Babel，将 JSX/ES6 转成浏览器可执行的 JS。最后将可执行的 JS 通过 new Function(...args)(...argv);来执行（创建一个新的作用域执行编译后的 JS 代码，使其能够访问 React、Zarm、GlobalContext 等变量。）

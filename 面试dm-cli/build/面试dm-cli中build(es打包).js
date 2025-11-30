@@ -54,7 +54,7 @@ env: {
 // 支持 async/await、生成器等语法而不污染全局作用域。
 
 // --build-css
-//  1.编译 SASS → CSS
+//  1.使用gulp将 SASS 编译成 CSS
 // 2\.生成一个额外的 JavaScript 文件（css.js），这个文件用于在运行时注入 CSS（比如在 React 组件库里自动加载样式）。
 // project/
 // ├── components/
