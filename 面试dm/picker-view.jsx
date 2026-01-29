@@ -27,6 +27,26 @@ const dataSource = [
   },
 ];
 
+
+// <div className={bem([className])} style={style}>
+//     <div className={bem('content')}>
+//         {columns.map((column, index) => (
+//           <Wheel
+//             key={+index}
+//             dataSource={column}
+//             value={innerValue?.[index]}
+//             fieldNames={fieldNames}
+//             itemRender={itemRender ? (item) => itemRender(item, index) : undefined}
+//             disabled={disabled}
+//             onChange={(selected: WheelValue) => onValueChange(selected, index)}
+//             stopScroll={stopScroll}
+//           />
+//         ))}
+//     </div>
+//     <div className={bem('mask', [{ top: true }])} />
+//     <div className={bem('mask', [{ bottom: true }])} />
+//  </div>
+
 <PickerView
   ref={pickerRef}
   dataSource={dataSource}
