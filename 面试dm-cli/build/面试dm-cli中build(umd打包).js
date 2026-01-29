@@ -52,3 +52,4 @@ webpack(config).run((err, stats) => {
 }
 
 // 打包成 dm.js、dm.css
+// webpack =>  umd.js 无论浏览器或者node都可以用
